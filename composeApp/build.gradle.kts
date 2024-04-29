@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.0.0-RC1"
+
 }
 
 kotlin {
@@ -35,10 +37,29 @@ kotlin {
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material)
+            implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1-Beta")
+            implementation("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0-alpha01")
+            implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0")
+
+
+            implementation("com.google.android.gms:play-services-location:21.1.0")
+            implementation("com.google.accompanist:accompanist-permissions:0.35.0-alpha")
+
+            implementation("io.ktor:ktor-client-core:2.3.10")
+            implementation("io.ktor:ktor-client-cio:2.3.10")
+            implementation("io.ktor:ktor-client-content-negotiation:2.3.10")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+            implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.10")
+
+
+
+
         }
     }
 }
@@ -72,8 +93,22 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.12"
+    }
+
+
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
+        implementation("com.google.android.gms:play-services-location:21.1.0")
+        implementation("com.google.accompanist:accompanist-permissions:0.35.0-alpha")
     }
+}
+dependencies {
+    implementation(libs.androidx.activity.ktx)
 }
 
