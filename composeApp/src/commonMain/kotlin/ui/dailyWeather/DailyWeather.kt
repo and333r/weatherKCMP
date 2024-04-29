@@ -17,6 +17,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,7 +41,7 @@ import kotlin.math.roundToInt
 
 @Preview
 @Composable
-fun dailyWeather (){
+fun dailyWeather (dailyWeatherViewModel: DailyWeatherViewModel){
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -52,18 +53,20 @@ fun dailyWeather (){
         val initListI = listOf(1, 2, 3, 2, 3, 1, 3, 3, 3, 23, 1, 2, 3)
         val initListS = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13")
 
-        val latitude  = "43.5667"
-        val longitude = "-5.9"
+        val temperatures : List<Double> by dailyWeatherViewModel.temperatures.collectAsState(initial = initListD)
+        val codes : List<Int> by dailyWeatherViewModel.codes.collectAsState(initial = initListI)
+        val hours : List<String> by dailyWeatherViewModel.hours.collectAsState(initial = initListS)
+
+
+        val latitude : String by dailyWeatherViewModel.latitude.collectAsState(initial = "43.5667")
+        val longitude : String by dailyWeatherViewModel.longitude.collectAsState(initial = "-5.9")
+
         LaunchedEffect(latitude) {
             println("Hola")
-            //dailyWeatherViewModel.getAllData(latitude.toDouble(), longitude.toDouble())
+            dailyWeatherViewModel.getAllData(latitude.toDouble(), longitude.toDouble())
             println(latitude)
             println(longitude)
         }
-
-        val temperatures = initListD
-        val codes = initListI
-        val hours = initListS
 
         Spacer(modifier = Modifier.height(6.dp))
         Row (modifier = Modifier.fillMaxWidth()) {

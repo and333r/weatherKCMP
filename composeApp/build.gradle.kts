@@ -16,7 +16,6 @@ kotlin {
             }
         }
     }
-    
     listOf(
         iosX64(),
         iosArm64(),
@@ -56,6 +55,11 @@ kotlin {
             implementation("io.ktor:ktor-client-content-negotiation:2.3.10")
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
             implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.10")
+
+            implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0")
+            implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
+
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0-RC.2")
 
 
 

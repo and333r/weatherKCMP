@@ -22,8 +22,11 @@ import model.data.weatherBL
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import ui.actualWeather.ActualWeatherViewModel
 import ui.actualWeather.actualWeather
+import ui.dailyWeather.DailyWeatherViewModel
 import ui.dailyWeather.dailyWeather
+import ui.weeklyWeather.WeeklyWeatherViewModel
 import ui.weeklyWeather.weeklyWeather
 
 @Preview
@@ -31,9 +34,13 @@ import ui.weeklyWeather.weeklyWeather
 fun App() {
     MaterialTheme {
         Column {
-            actualWeather()
-            dailyWeather()
-            weeklyWeather()
+            val actualWeatherViewModel: ActualWeatherViewModel = ActualWeatherViewModel()
+            val dailyWeatherViewModel: DailyWeatherViewModel = DailyWeatherViewModel()
+            val weeklyWeatherViewModel: WeeklyWeatherViewModel = WeeklyWeatherViewModel()
+
+            actualWeather(actualWeatherViewModel)
+            dailyWeather(dailyWeatherViewModel)
+            weeklyWeather(weeklyWeatherViewModel)
         }
     }
 }

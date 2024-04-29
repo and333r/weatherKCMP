@@ -19,6 +19,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 
 
@@ -44,24 +45,25 @@ import weatherappkcmp.composeapp.generated.resources.*
 
 @Preview
 @Composable
-fun actualWeather(modifier: Modifier = Modifier) {
-    val actualT = "14"
-    val actualC = "23"
-    val actualH = "Humedad: 65%"
-    val actualRT = "Sensación térmica: 23ºC"
-    val actualP = "Precipitaciones: 0%"
-    val estado = "Noche"
-    val latitude  = "43.5667"
-    val longitude = "-5.9"
+fun actualWeather(actualWeatherViewModel: ActualWeatherViewModel, modifier: Modifier = Modifier) {
+
+    val actualT : String by actualWeatherViewModel.actualT.collectAsState(initial = "14")
+    val actualC : String by actualWeatherViewModel.actualC.collectAsState(initial = "23")
+    val actualH : String by actualWeatherViewModel.actualH.collectAsState(initial = "Humedad: ")
+    val actualRT : String by actualWeatherViewModel.actualRT.collectAsState(initial = "Sensación térmica: ºC")
+    val actualP : String by actualWeatherViewModel.actualP.collectAsState(initial = "Precipitaciones: ")
+    val estado : String by actualWeatherViewModel.estado.collectAsState(initial = "Noche")
+    val latitude : String by actualWeatherViewModel.latitude.collectAsState(initial = "43.5667")
+    val longitude : String by actualWeatherViewModel.longitude.collectAsState(initial = "-5.9")
 
     LaunchedEffect(latitude) {
         println("Hola")
-        //actualWeatherViewModel.getAllData(latitude.toDouble(), longitude.toDouble())
+        actualWeatherViewModel.getAllData("43.5667".toDouble(), "-5.9".toDouble())
         println(latitude)
         println(longitude)
     }
 
-    actualWeatherInfo(actualH, actualT, actualP, actualRT, actualC.toInt(), estado)
+    actualWeatherInfo(actualH, actualT, actualP, actualRT, actualC.toInt(), estado, actualWeatherViewModel)
 
 }
 
@@ -76,6 +78,7 @@ fun actualWeatherInfo(
     actualRT: String,
     actualC: Int,
     estado: String,
+    actualWeatherViewModel: ActualWeatherViewModel
 ) {
     val color_init = listOf(
         Color(0xFF000000),
@@ -84,8 +87,8 @@ fun actualWeatherInfo(
         Color(0xFF616161),
         Color(0xFF9E9E9E)
     )
-    //val gradientColorList : List<Color> by actualWeatherViewModel.gradientColorList.observeAsState(initial = color_init)
-    //actualWeatherViewModel.returnGradient(actualC)
+    val gradientColorList : List<Color> by actualWeatherViewModel.gradientColorList.collectAsState(initial = color_init)
+    actualWeatherViewModel.returnGradient(actualC)
 
     Box(
         modifier = Modifier
@@ -94,7 +97,7 @@ fun actualWeatherInfo(
             .background(
                 brush = GradientBackgroundBrush(
                     isVerticalGradient = false,
-                    colors = color_init
+                    colors = gradientColorList
                 )
             )
     ) {

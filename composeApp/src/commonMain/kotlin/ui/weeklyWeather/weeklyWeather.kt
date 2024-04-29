@@ -26,6 +26,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,6 +41,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.flow.MutableStateFlow
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -50,7 +52,7 @@ import kotlin.math.roundToInt
 
 @Preview
 @Composable
-fun weeklyWeather() {
+fun weeklyWeather(weeklyWeatherViewModel: WeeklyWeatherViewModel) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -69,16 +71,18 @@ fun weeklyWeather() {
             Pair(Triple("Viernes", "14", "9.3"), 0)
         )
 
-        val latitude = "43.5667"
-        val longitude =  "-5.9"
+        val latitude : String by weeklyWeatherViewModel.latitude.collectAsState(initial = "43.5667")
+        val longitude : String by weeklyWeatherViewModel.longitude.collectAsState(initial = "-5.9")
+
         LaunchedEffect(latitude) {
             println("Hola")
-            //weeklyWeatherViewModel.getAllData(latitude.toDouble(), longitude.toDouble())
+            weeklyWeatherViewModel.getAllData(latitude.toDouble(), longitude.toDouble())
             println(latitude)
             println(longitude)
         }
 
-        val maxMin  = initListMaxMin
+        val maxMin : List<Pair<Triple<String, String, String>, Int>> by weeklyWeatherViewModel.maxMin.collectAsState(initial = initListMaxMin)
+
         Column(modifier = Modifier.fillMaxWidth().background(color = MaterialTheme.colorScheme.secondary, shape = RoundedCornerShape(6.dp)).padding(6.dp)) {
             Text(
                 text = "Previsión (7 días):",
@@ -119,7 +123,7 @@ fun weeklyWeather() {
                         }
                         Box(
                             modifier = Modifier
-                                .weight(1f)
+                                .weight(0.75f)
                                 .padding(8.dp)
                         ) {
                             Image(
@@ -146,7 +150,7 @@ fun weeklyWeather() {
                         }
                         Box(
                             modifier = Modifier
-                                .weight(1.25f)
+                                .weight(1.4f)
                                 .padding(8.dp)
                         ) {
                             Text(
