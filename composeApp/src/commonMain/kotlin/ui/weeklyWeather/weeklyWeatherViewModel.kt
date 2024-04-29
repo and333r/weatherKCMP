@@ -61,8 +61,8 @@ class WeeklyWeatherViewModel {
         println("Dia de la semana: $currentTime")
         for (i in 1..7) {
             val currentDay = weatherBL.getSpecificWeekDayTemperature(weekW, i)
-            val currentMaxMin = getMaxAndMinT(currentDay)
-            val mostRepeatedCode = getAverageCode(currentDay)
+            val currentMaxMin = weatherBL.getMaxAndMinT(currentDay)
+            val mostRepeatedCode = weatherBL.getAverageCode(currentDay)
             val weekDaySpanish = weekDayList.get((currentTime + i)-1)
             val stringFormatted = weekDaySpanish + currentMaxMin
             println(stringFormatted)
@@ -72,28 +72,6 @@ class WeeklyWeatherViewModel {
 
 
     }
-
-
-    private fun getMaxAndMinT(dayWeather: dayWeather): Pair<String, String> {
-        var max = -1
-        var min = 1000
-        for (t in dayWeather.temperatures) {
-            if (t > max) {
-                max = t.roundToInt()
-            } else if (t<min){
-                min = t.roundToInt()
-            }
-        }
-        return Pair(max.toString(), min.toString())
-    }
-
-    private fun getAverageCode(dayWeather: dayWeather): Int {
-        val conteo = dayWeather.codes.groupingBy { it }.eachCount()
-        val numeroMasRepetido = conteo.maxByOrNull { it.value }?.key
-        print("Numero mas repetido: $numeroMasRepetido")
-        return numeroMasRepetido?.toInt() ?: 0
-    }
-
 
     fun setLatAndLong(latitude: Double, longitude: Double) {
         _latitude.value = latitude.toString()
