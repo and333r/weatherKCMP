@@ -2,7 +2,6 @@ package ui.actualWeather
 
 
 
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -30,7 +28,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.input.key.Key.Companion.R
 
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -45,7 +42,10 @@ import weatherappkcmp.composeapp.generated.resources.*
 
 @Preview
 @Composable
-fun actualWeather(actualWeatherViewModel: ActualWeatherViewModel, modifier: Modifier = Modifier) {
+fun actualWeather(
+    actualWeatherViewModel: ActualWeatherViewModel,
+    modifier: Modifier = Modifier
+) {
 
     val actualT : String by actualWeatherViewModel.actualT.collectAsState(initial = "14")
     val actualC : String by actualWeatherViewModel.actualC.collectAsState(initial = "23")
@@ -58,7 +58,7 @@ fun actualWeather(actualWeatherViewModel: ActualWeatherViewModel, modifier: Modi
 
     LaunchedEffect(latitude) {
         println("Hola")
-        actualWeatherViewModel.getAllData("43.5667".toDouble(), "-5.9".toDouble())
+        actualWeatherViewModel.getAllData(latitude.toDouble(), longitude.toDouble())
         println(latitude)
         println(longitude)
     }
@@ -88,7 +88,6 @@ fun actualWeatherInfo(
         Color(0xFF9E9E9E)
     )
     val gradientColorList : List<Color> by actualWeatherViewModel.gradientColorList.collectAsState(initial = color_init)
-    actualWeatherViewModel.returnGradient(actualC)
 
     Box(
         modifier = Modifier
@@ -150,13 +149,13 @@ fun actualWeatherInfo(
                             modifier = Modifier.scale(1.5F),
                         )
                         Column(horizontalAlignment = Alignment.Start) {
-                            Spacer(modifier = Modifier.height(50.dp))
+                            Spacer(modifier = Modifier.height(70.dp))
                             Text(
                                 text = actualH,
                                 style = TextStyle(
                                     fontFamily = FontFamily.SansSerif,
                                     fontWeight = FontWeight.Normal,
-                                    fontSize = 15.sp
+                                    fontSize = 12.sp
                                 )
                             )
                             Text(
@@ -164,7 +163,7 @@ fun actualWeatherInfo(
                                 style = TextStyle(
                                     fontFamily = FontFamily.SansSerif,
                                     fontWeight = FontWeight.Normal,
-                                    fontSize = 15.sp
+                                    fontSize = 12.sp
                                 )
                             )
                             Text(
@@ -172,7 +171,7 @@ fun actualWeatherInfo(
                                 style = TextStyle(
                                     fontFamily = FontFamily.SansSerif,
                                     fontWeight = FontWeight.Normal,
-                                    fontSize = 15.sp
+                                    fontSize = 12.sp
                                 )
                             )
                         }

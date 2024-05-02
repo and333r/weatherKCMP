@@ -55,6 +55,8 @@ kotlin {
             implementation("io.ktor:ktor-client-content-negotiation:2.3.10")
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
             implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.10")
+            implementation("io.ktor:ktor-server-http-redirect:2.3.10")
+
 
             implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0")
             implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
@@ -62,7 +64,9 @@ kotlin {
             implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0-RC.2")
 
 
-
+        }
+        iosMain.dependencies {
+            implementation("io.ktor:ktor-client-darwin:2.3.10")
 
         }
     }

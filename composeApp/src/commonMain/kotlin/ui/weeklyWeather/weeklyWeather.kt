@@ -117,7 +117,7 @@ fun weeklyWeather(weeklyWeatherViewModel: WeeklyWeatherViewModel) {
                                 style = TextStyle(
                                     fontFamily = FontFamily.SansSerif,
                                     fontWeight = FontWeight.Bold,
-                                    fontSize = 21.sp
+                                    fontSize = 18.sp
                                 )
                             )
                         }
@@ -143,7 +143,7 @@ fun weeklyWeather(weeklyWeatherViewModel: WeeklyWeatherViewModel) {
                                 style = TextStyle(
                                     fontFamily = FontFamily.SansSerif,
                                     fontWeight = FontWeight.Normal,
-                                    fontSize = 20.sp
+                                    fontSize = 18.sp
                                 )
                             )
 
@@ -158,7 +158,7 @@ fun weeklyWeather(weeklyWeatherViewModel: WeeklyWeatherViewModel) {
                                 style = TextStyle(
                                     fontFamily = FontFamily.SansSerif,
                                     fontWeight = FontWeight.Normal,
-                                    fontSize = 20.sp
+                                    fontSize = 18.sp
                                 )
                             )
                         }

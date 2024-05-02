@@ -39,7 +39,8 @@ class DailyWeatherViewModel {
         val weekW = weatherBL.getAllData(latitude, longitude)
         val dayW = weatherBL.getDailyWeather(weekW)
         val currentHour = Clock.System.now()
-        val currentTime = currentHour.toLocalDateTime(TimeZone.UTC).hour
+        var currentTime = currentHour.toLocalDateTime(TimeZone.UTC).hour
+        currentTime += 2
         val range = currentTime..23
         val my_array = range.toList().toTypedArray()
         val final_array: MutableList<String> = my_array.map { it.toString() }.toMutableList()
