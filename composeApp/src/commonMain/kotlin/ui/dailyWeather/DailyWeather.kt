@@ -31,6 +31,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import getTextSizeBig
+import getTextSizeMedium
+import getTextSizeSmall
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -81,7 +84,7 @@ fun dailyWeather (dailyWeatherViewModel: DailyWeatherViewModel){
                                 style = TextStyle(
                                     fontFamily = FontFamily.SansSerif,
                                     fontWeight = FontWeight.Normal,
-                                    fontSize = 15.sp
+                                    fontSize = getTextSizeMedium().sp
                                 )
                             )
                         } else {
@@ -90,7 +93,7 @@ fun dailyWeather (dailyWeatherViewModel: DailyWeatherViewModel){
                                 style = TextStyle(
                                     fontFamily = FontFamily.SansSerif,
                                     fontWeight = FontWeight.Normal,
-                                    fontSize = 15.sp
+                                    fontSize = getTextSizeMedium().sp
                                 )
                             )
                         }
@@ -100,7 +103,7 @@ fun dailyWeather (dailyWeatherViewModel: DailyWeatherViewModel){
                             style = TextStyle(
                                 fontFamily = FontFamily.SansSerif,
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 25.sp
+                                fontSize = getTextSizeBig().sp
                             )
                         )
                         Image(

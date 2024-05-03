@@ -9,7 +9,15 @@ struct ComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
         locationManager.checkLocationAuthorization()
         let coordinates = locationManager.lastKnownLocation
-        let mainViewControllerKT = MainViewControllerKt.MainViewController(latitude: coordinates!.latitude, longitude: coordinates!.longitude)
+        let actualWeatherViewModel = ActualWeatherViewModel()
+        let dailyWeatherViewModel = DailyWeatherViewModel()
+        let weeklyWeatherViewModel = WeeklyWeatherViewModel()
+        actualWeatherViewModel.setLatAndLong(latitude: coordinates!.latitude, longitude: coordinates!.longitude)
+        dailyWeatherViewModel.setLatAndLong(latitude: coordinates!.latitude, longitude: coordinates!.longitude)
+        weeklyWeatherViewModel.setLatAndLong(latitude: coordinates!.latitude, longitude: coordinates!.longitude)
+        let mainViewControllerKT = MainViewControllerKt.MainViewController(actualWeatherViewModel: actualWeatherViewModel,
+        dailyWeatherViewModel: dailyWeatherViewModel,
+        weeklyWeatherViewModel: weeklyWeatherViewModel)
         return mainViewControllerKT
     }
 

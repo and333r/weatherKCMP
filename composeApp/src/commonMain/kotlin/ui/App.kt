@@ -13,23 +13,18 @@ import ui.weeklyWeather.weeklyWeather
 
 @Preview
 @Composable
-fun App(latitude: Double, longitude: Double) {
+fun App(actualWeatherViewModel: ActualWeatherViewModel,
+        dailyWeatherViewModel: DailyWeatherViewModel,
+        weeklyWeatherViewModel: WeeklyWeatherViewModel) {
+
     MaterialTheme {
         Column {
-            val actualWeatherViewModel: ActualWeatherViewModel = ActualWeatherViewModel()
-            val dailyWeatherViewModel: DailyWeatherViewModel = DailyWeatherViewModel()
-            val weeklyWeatherViewModel: WeeklyWeatherViewModel = WeeklyWeatherViewModel()
-            actualWeatherViewModel.setLatAndLong(latitude, longitude)
-            dailyWeatherViewModel.setLatAndLong(latitude, longitude)
-            weeklyWeatherViewModel.setLatAndLong(latitude, longitude)
             actualWeather(actualWeatherViewModel)
             dailyWeather(dailyWeatherViewModel)
             weeklyWeather(weeklyWeatherViewModel)
         }
     }
 }
-
-
 
 
 

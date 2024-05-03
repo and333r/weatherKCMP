@@ -41,6 +41,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import getTextSizeMedium
+import getTextSizeSmall
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -90,7 +92,7 @@ fun weeklyWeather(weeklyWeatherViewModel: WeeklyWeatherViewModel) {
                     fontFamily = FontFamily.SansSerif,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
-                    fontSize = 16.sp
+                    fontSize = getTextSizeSmall().sp
                 )
             )
             repeat(maxMin.size) {
@@ -117,7 +119,7 @@ fun weeklyWeather(weeklyWeatherViewModel: WeeklyWeatherViewModel) {
                                 style = TextStyle(
                                     fontFamily = FontFamily.SansSerif,
                                     fontWeight = FontWeight.Bold,
-                                    fontSize = 18.sp
+                                    fontSize = getTextSizeMedium().sp
                                 )
                             )
                         }
@@ -143,7 +145,7 @@ fun weeklyWeather(weeklyWeatherViewModel: WeeklyWeatherViewModel) {
                                 style = TextStyle(
                                     fontFamily = FontFamily.SansSerif,
                                     fontWeight = FontWeight.Normal,
-                                    fontSize = 18.sp
+                                    fontSize = getTextSizeMedium().sp
                                 )
                             )
 
@@ -158,7 +160,7 @@ fun weeklyWeather(weeklyWeatherViewModel: WeeklyWeatherViewModel) {
                                 style = TextStyle(
                                     fontFamily = FontFamily.SansSerif,
                                     fontWeight = FontWeight.Normal,
-                                    fontSize = 18.sp
+                                    fontSize = getTextSizeMedium().sp
                                 )
                             )
                         }

@@ -34,6 +34,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import getTextSizeMedium
+import getTextSizeMegaBig
+import getTextSizeSuperBig
+import getTextSizeSuperSmall
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -116,7 +120,7 @@ fun actualWeatherInfo(
                             style = TextStyle(
                                 fontFamily = FontFamily.SansSerif,
                                 fontWeight = FontWeight.Normal,
-                                fontSize = 18.sp
+                                fontSize = getTextSizeMedium().sp
                             )
                         )
                         Text(
@@ -124,7 +128,7 @@ fun actualWeatherInfo(
                             style = TextStyle(
                                 fontFamily = FontFamily.Monospace,
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 96.sp
+                                fontSize = getTextSizeMegaBig().sp
                             )
                         )
                         Spacer(modifier = Modifier.width(16.dp))
@@ -133,7 +137,7 @@ fun actualWeatherInfo(
                             style = TextStyle(
                                 fontFamily = FontFamily.SansSerif,
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 32.sp
+                                fontSize = getTextSizeSuperBig().sp
                             )
                         )
                     }
@@ -155,7 +159,7 @@ fun actualWeatherInfo(
                                 style = TextStyle(
                                     fontFamily = FontFamily.SansSerif,
                                     fontWeight = FontWeight.Normal,
-                                    fontSize = 12.sp
+                                    fontSize = getTextSizeSuperSmall().sp
                                 )
                             )
                             Text(
@@ -163,7 +167,7 @@ fun actualWeatherInfo(
                                 style = TextStyle(
                                     fontFamily = FontFamily.SansSerif,
                                     fontWeight = FontWeight.Normal,
-                                    fontSize = 12.sp
+                                    fontSize = getTextSizeSuperSmall().sp
                                 )
                             )
                             Text(
@@ -171,7 +175,7 @@ fun actualWeatherInfo(
                                 style = TextStyle(
                                     fontFamily = FontFamily.SansSerif,
                                     fontWeight = FontWeight.Normal,
-                                    fontSize = 12.sp
+                                    fontSize = getTextSizeSuperSmall().sp
                                 )
                             )
                         }
