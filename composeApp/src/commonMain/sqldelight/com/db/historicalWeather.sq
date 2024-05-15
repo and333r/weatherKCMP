@@ -1,0 +1,17 @@
+CREATE TABLE historicalWeather (
+    date TEXT NOT NULL PRIMARY KEY,
+    latitude REAL NOT NULL,
+    longitude REAL NOT NULL,
+    temperature REAL NOT NULL
+);
+
+insert:
+INSERT OR REPLACE INTO historicalWeather(date, latitude, longitude, temperature)
+VALUES(?,?, ?, ?);
+
+getAll:
+SELECT * FROM historicalWeather;
+
+getSpecificPlace:
+SELECT * FROM historicalWeather
+WHERE latitude = :latitude AND longitude = :longitude;

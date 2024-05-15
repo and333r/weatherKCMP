@@ -6,6 +6,9 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     id("org.jetbrains.kotlin.plugin.serialization") version "2.0.0-RC1"
 
+    id("app.cash.sqldelight") version "2.0.0"
+
+
 }
 
 kotlin {
@@ -32,6 +35,8 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
+            implementation("app.cash.sqldelight:android-driver:2.0.0")
+
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -40,6 +45,8 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+
+            implementation("app.cash.sqldelight:coroutines-extensions:2.0.0")
 
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1-Beta")
             implementation("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0-alpha01")
@@ -67,9 +74,20 @@ kotlin {
         }
         iosMain.dependencies {
             implementation("io.ktor:ktor-client-darwin:2.3.10")
+            implementation("app.cash.sqldelight:native-driver:2.0.0")
+
 
         }
     }
+
+    sqldelight {
+        databases {
+            create(name = "WeatherAppDatabaseKCMP") {
+                packageName.set("com.db")
+            }
+        }
+    }
+
 }
 
 android {

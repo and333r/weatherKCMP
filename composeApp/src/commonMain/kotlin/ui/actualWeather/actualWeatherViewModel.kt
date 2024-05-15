@@ -10,6 +10,9 @@ import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import model.data.weatherBL
+import model.db.AppModule
+import model.db.DataSource
+import model.db.DatabaseDriverFactory
 import kotlin.math.roundToInt
 
 
@@ -73,6 +76,7 @@ class ActualWeatherViewModel : ViewModel(){
     fun setLatAndLong(latitude: Double, longitude: Double){
         _latitude.value = latitude.toString()
         _longitude.value = longitude.toString()
+
     }
 
 
