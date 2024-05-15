@@ -1,6 +1,7 @@
 package ui.weeklyWeather
 
 import androidx.annotation.RequiresApi
+import com.db.WeatherAppDatabaseKCMP
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.datetime.Clock
@@ -9,6 +10,10 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import model.Domain.dayWeather
 import model.data.weatherBL
+import model.db.DataSource
+import model.db.DatabaseDriverFactory
+import model.db.createDatabase
+import model.db.historicalWeatherRepositorySQL
 import kotlin.math.roundToInt
 
 class WeeklyWeatherViewModel {
@@ -26,7 +31,9 @@ class WeeklyWeatherViewModel {
     private val initListI = listOf(1, 2, 3, 2, 3, 1, 3)
     private val initListS = listOf("1", "2", "3", "4", "5", "6", "7")
 
-
+    val hola = historicalWeatherRepositorySQL(dataSource = DataSource(createDatabase(
+        DatabaseDriverFactory()
+    )))
 
     private val _latitude = MutableStateFlow<String>("43.5667")
     val latitude: StateFlow<String> = _latitude
@@ -53,6 +60,7 @@ class WeeklyWeatherViewModel {
         "Sábado")
 
     suspend fun getAllData(latitude: Double, longitude: Double) {
+        hola.insert("holaa", 2.34, 2.23, 17.8)
         val weekW = weatherBL.getAllData(latitude, longitude)
         val dayW = weatherBL.getDailyWeather(weekW)
         val currentHour = Clock.System.now()

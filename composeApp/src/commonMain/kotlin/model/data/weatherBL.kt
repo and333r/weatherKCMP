@@ -3,8 +3,6 @@ package model.data
 import androidx.compose.ui.graphics.Color
 import io.ktor.client.call.body
 import io.ktor.client.request.get
-import io.ktor.client.statement.bodyAsText
-import kotlinx.serialization.json.Json
 import model.Domain.actualWeather
 import model.Domain.dayWeather
 import model.Domain.weekWeather

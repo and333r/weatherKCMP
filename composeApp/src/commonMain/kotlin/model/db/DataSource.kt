@@ -2,14 +2,22 @@ package model.db
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
+import com.db.HistoricalWeather
 import com.db.WeatherAppDatabaseKCMP
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.map
+import model.Domain.historicalWeather
 
-class DataSource(private val db: WeatherAppDatabaseKCMP) {
+class DataSource(db: WeatherAppDatabaseKCMP): HistoricDataSource {
 
         private val queries = db.historicalWeatherQueries
 
         //    Set id = null to let SQLDelight autogenerate the id
-        fun insert(date: String, latitude: Double, longitude: Double, temperature: Double) {
+        override suspend fun insert(date: String, latitude: Double, longitude: Double, temperature: Double) {
             queries.insert(
                 date = date,
                 latitude = latitude,
@@ -18,12 +26,12 @@ class DataSource(private val db: WeatherAppDatabaseKCMP) {
             )
         }
 
-        fun getAll() {
-            queries.getAll()
+        override suspend fun getAll(): Flow<List<HistoricalWeather>> {
+            return queries.getAll().asFlow().mapToList(Dispatchers.IO)
         }
 
-        fun getSpecificPlace(latitude: Double, longitude: Double) {
-            queries.getSpecificPlace(latitude = latitude, longitude = longitude)
+        override suspend fun getSpecificPlace(latitude: Double, longitude: Double): Flow<List<HistoricalWeather>> {
+            return queries.getSpecificPlace(latitude = latitude, longitude = longitude).asFlow().mapToList(Dispatchers.IO)
 
         }
 

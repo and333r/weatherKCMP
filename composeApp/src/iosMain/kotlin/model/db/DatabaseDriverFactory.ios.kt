@@ -4,7 +4,8 @@ import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import com.db.WeatherAppDatabaseKCMP
 
-actual class DatabaseDriverFactory {
-    actual fun create(): SqlDriver =
-        NativeSqliteDriver(WeatherAppDatabaseKCMP.Schema, "WeatherAppDatabaseKCMP")
+actual class DatabaseDriverFactory actual constructor() {
+    actual fun create(): SqlDriver {
+        return NativeSqliteDriver(WeatherAppDatabaseKCMP.Schema, "WeatherAppDatabaseKCMP")
+    }
 }

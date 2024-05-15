@@ -1,4 +1,4 @@
-CREATE TABLE historicalWeather (
+CREATE TABLE IF NOT EXISTS historicalWeather (
     date TEXT NOT NULL PRIMARY KEY,
     latitude REAL NOT NULL,
     longitude REAL NOT NULL,
@@ -14,4 +14,4 @@ SELECT * FROM historicalWeather;
 
 getSpecificPlace:
 SELECT * FROM historicalWeather
-WHERE latitude = :latitude AND longitude = :longitude;
+WHERE latitude = ? AND longitude = ?;

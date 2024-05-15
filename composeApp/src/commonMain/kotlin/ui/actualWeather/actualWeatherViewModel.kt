@@ -1,18 +1,13 @@
 package ui.actualWeather
 
-import androidx.annotation.RequiresApi
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.datetime.Clock
-import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import model.data.weatherBL
-import model.db.AppModule
-import model.db.DataSource
-import model.db.DatabaseDriverFactory
 import kotlin.math.roundToInt
 
 

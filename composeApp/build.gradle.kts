@@ -31,7 +31,7 @@ kotlin {
     }
     
     sourceSets {
-        
+
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
@@ -65,8 +65,8 @@ kotlin {
             implementation("io.ktor:ktor-server-http-redirect:2.3.10")
 
 
-            implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0")
-            implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0")
+            implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
 
             implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0-RC.2")
 
@@ -79,15 +79,16 @@ kotlin {
 
         }
     }
+    task("testClasses")
 
-    sqldelight {
-        databases {
-            create(name = "WeatherAppDatabaseKCMP") {
-                packageName.set("com.db")
-            }
+}
+
+sqldelight {
+    databases {
+        create(name = "WeatherAppDatabaseKCMP") {
+            packageName.set("com.db")
         }
     }
-
 }
 
 android {
@@ -136,5 +137,6 @@ android {
 }
 dependencies {
     implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.startup.runtime)
 }
 
