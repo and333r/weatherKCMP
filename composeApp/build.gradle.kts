@@ -29,6 +29,13 @@ kotlin {
             isStatic = true
         }
     }
+    sqldelight {
+        databases {
+            create(name = "WeatherAppDatabaseKCMP") {
+                packageName.set("com.db")
+            }
+        }
+    }
     
     sourceSets {
 
@@ -83,13 +90,7 @@ kotlin {
 
 }
 
-sqldelight {
-    databases {
-        create(name = "WeatherAppDatabaseKCMP") {
-            packageName.set("com.db")
-        }
-    }
-}
+
 
 android {
     namespace = "com.andercarotfg.weatherappkcmp"

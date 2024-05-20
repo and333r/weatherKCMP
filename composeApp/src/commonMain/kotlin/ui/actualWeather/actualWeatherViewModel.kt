@@ -4,10 +4,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import model.data.weatherBL
+import model.db.DatabaseDriverFactory
+import model.db.createDatabase
+import model.db.actualWeather.actualWeatherDataSource
+import model.db.actualWeather.actualWeatherRepository
+import model.db.actualWeather.actualWeatherRepositorySQL
+import model.db.historicWeather.historicalWeatherDataSource
+import model.db.historicWeather.historicalWeatherRepositorySQL
 import kotlin.math.roundToInt
 
 
@@ -46,7 +54,6 @@ class ActualWeatherViewModel : ViewModel(){
 
     private val _longitude = MutableStateFlow<String>("-5.9")
     val longitude : StateFlow<String> = _longitude
-
 
     suspend fun getAllData(latitude: Double, longitude: Double) {
         val weekW = weatherBL.getAllData(latitude, longitude)

@@ -1,4 +1,4 @@
-package model.db
+package model.db.historicWeather
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
@@ -7,12 +7,8 @@ import com.db.WeatherAppDatabaseKCMP
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.map
-import model.Domain.historicalWeather
 
-class DataSource(db: WeatherAppDatabaseKCMP): HistoricDataSource {
+class historicalWeatherDataSource(db: WeatherAppDatabaseKCMP): HistoricDataSource {
 
         private val queries = db.historicalWeatherQueries
 

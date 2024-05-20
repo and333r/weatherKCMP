@@ -1,4 +1,4 @@
-package model.db
+package model.db.historicWeather
 
 import com.db.HistoricalWeather
 import kotlinx.coroutines.flow.Flow

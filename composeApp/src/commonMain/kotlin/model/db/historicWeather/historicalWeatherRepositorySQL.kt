@@ -1,13 +1,10 @@
-package model.db
+package model.db.historicWeather
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.cancellable
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import model.Domain.historicalWeather
 
 class historicalWeatherRepositorySQL(
-    private val dataSource: DataSource
+    private val dataSource: HistoricDataSource
 ): historicalWeatherRepository {
     override fun getSpecificPlace(
         latitude: Double,
