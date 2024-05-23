@@ -14,22 +14,23 @@ class dailyWeatherDataSource(db: WeatherAppDatabaseKCMP): DailyDataSource {
 
     private val queries = db.dailyWeatherQueries
     //    Set id = null to let SQLDelight autogenerate the id
-    override suspend fun insert(id: Long, date: String, latitude: Double, longitude: Double, temperature: Double, code: Long) {
+    override suspend fun insert(date: String, latitude: Double, longitude: Double, temperature: Double, code: Long) {
         queries.insert(
-            // id = null,
-            //longitude = longitude,
-            //  latitude = latitude,
-            //  temperature = temperature,
-            //humidity = humidity,
-            //code = code,
-            //relativeT = relativeT,
-            //precipitation = precipitation
-
+            id = null,
+            date = date,
+            latitude = latitude,
+            longitude = longitude,
+            temperature = temperature,
+            code = code
         )
     }
 
     override suspend fun getAll(): Flow<List<DailyWeather>> {
         return queries.getAll().asFlow().mapToList(Dispatchers.IO)
+    }
+
+    override suspend fun deleteAll() {
+        queries.deleteAll()
     }
 
 }

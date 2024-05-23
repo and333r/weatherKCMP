@@ -13,17 +13,15 @@ class weeklyWeatherDataSource(db: WeatherAppDatabaseKCMP): WeekDataSource {
 
     private val queries = db.weeklyWeatherQueries
     //    Set id = null to let SQLDelight autogenerate the id
-    override suspend fun insert(id: Long, date: String, latitude: Double, longitude: Double, temperatureMax: Double, temperatureMin: Double, code: Long) {
+    override suspend fun insert(date: String, latitude: Double, longitude: Double, temperatureMax: Double, temperatureMin: Double, code: Long) {
         queries.insert(
-            // id = null,
-            //longitude = longitude,
-            //  latitude = latitude,
-            //  temperature = temperature,
-            //humidity = humidity,
-            //code = code,
-            //relativeT = relativeT,
-            //precipitation = precipitation
-
+            id = null,
+            date = date,
+            longitude = longitude,
+            latitude = latitude,
+            temperatureMax = temperatureMax,
+            temperatureMin = temperatureMin,
+            code = code
         )
     }
 
@@ -31,4 +29,7 @@ class weeklyWeatherDataSource(db: WeatherAppDatabaseKCMP): WeekDataSource {
         return queries.getAll().asFlow().mapToList(Dispatchers.IO)
     }
 
+    override suspend fun deleteAll() {
+        queries.deleteAll()
+    }
 }

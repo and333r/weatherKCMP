@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS dailyWeather (
 );
 -- Insert de datos de prueba para actualWeather
 
-insert:
+test:
 INSERT OR REPLACE INTO dailyWeather(id, date, latitude, longitude, temperature, code)
 VALUES(1, 'test', 34.0522, 118.2437, 25.3, 800),
       (2,'test',  40.7128, -74.0060, 22.1, 801),
@@ -22,8 +22,10 @@ VALUES(1, 'test', 34.0522, 118.2437, 25.3, 800),
 getAll:
 SELECT * FROM dailyWeather;
 
+deleteAll:
+DELETE FROM dailyWeather;
 
-test:
+insert:
 INSERT OR REPLACE INTO dailyWeather(id, date, latitude, longitude, temperature, code)
 VALUES(?, ?,?, ?, ?, ?);
 

@@ -21,7 +21,6 @@ class weatherBL {
         }
 
         fun getDailyWeather(weekWeather: weekWeather): dayWeather {
-            println("Retrieving daily data...")
             return dayWeather(weekWeather.latitude, weekWeather.longitude,
                 weekWeather.hourly.temperature_2m.take(24),
                 weekWeather.hourly.relative_humidity_2m.take(24),
@@ -32,7 +31,6 @@ class weatherBL {
         }
 
         fun getActualTemperature(dayWeather: dayWeather, hour: Int): actualWeather {
-            println("Retrieving actual data...")
             return actualWeather(
                 14,
                 dayWeather.latitude, dayWeather.longitude,
@@ -45,7 +43,6 @@ class weatherBL {
         }
 
         fun getSpecificWeekDayTemperature(weekWeather: weekWeather, dayNumber: Int): dayWeather{
-            println("Retrieving each days data...")
             return dayWeather(weekWeather.latitude, weekWeather.longitude,
                 weekWeather.hourly.temperature_2m.subList((24*(dayNumber-1)), 24*dayNumber),
                 weekWeather.hourly.relative_humidity_2m.subList((24*(dayNumber-1)), 24*dayNumber),

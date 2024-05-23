@@ -12,7 +12,11 @@ import model.db.DatabaseDriverFactory
 import model.db.createDatabase
 import model.db.actualWeather.actualWeatherDataSource
 import model.db.actualWeather.actualWeatherRepositorySQL
+import model.db.actualWeather.dailyWeatherRepositorySQL
+import model.db.actualWeather.weeklyWeatherRepositorySQL
+import model.db.dailyWeather.dailyWeatherDataSource
 import model.db.historicWeather.historicalWeatherRepositorySQL
+import model.db.weeklyWeather.weeklyWeatherDataSource
 
 class WeeklyWeatherViewModel {
 
@@ -56,35 +60,64 @@ class WeeklyWeatherViewModel {
         "Sábado")
 
     val db = createDatabase(DatabaseDriverFactory())
-    val test = WeatherAppDatabaseKCMP.Schema
-    val ds_hw = historicalWeatherDataSource(db)
-    val ds_aw = actualWeatherDataSource(db)
-    val repo_hw = historicalWeatherRepositorySQL(dataSource = ds_hw)
-    val repo_aw = actualWeatherRepositorySQL(dataSource =  ds_aw)
-
+    val ds_ww = weeklyWeatherDataSource(db)
+    val repo_ww = weeklyWeatherRepositorySQL(dataSource = ds_ww)
     suspend fun getAllData(latitude: Double, longitude: Double) {
-
-        repo_hw.insert("Adios", 0.0, 0.0, 12.0)
-        val weekW = weatherBL.getAllData(latitude, longitude)
-        val dayW = weatherBL.getDailyWeather(weekW)
+        val weekW = weatherBL.getAllData(_latitude.value.toDouble(), _longitude.value.toDouble())
         val currentHour = Clock.System.now()
         val currentTime = currentHour.toLocalDateTime(TimeZone.UTC).dayOfWeek.ordinal
-        var lista = emptyList<Pair<Triple<String, String, String>, Int>>().toMutableList()
-        println("Dia de la semana: $currentTime")
-        for (i in 1..7) {
-            val currentDay = weatherBL.getSpecificWeekDayTemperature(weekW, i)
-            val currentMaxMin = weatherBL.getMaxAndMinT(currentDay)
-            val mostRepeatedCode = weatherBL.getAverageCode(currentDay)
-            val weekDaySpanish = weekDayList.get((currentTime + i)-1)
-            val stringFormatted = weekDaySpanish + currentMaxMin
-            println(stringFormatted)
-            lista.add(Pair(Triple(weekDaySpanish, currentMaxMin.first, currentMaxMin.second), mostRepeatedCode))
-        }
-        _maxMin.value = lista
+        val weekDaySpanish = weekDayList.get((currentTime + 1)-1)
+        val res = repo_ww.getAll()
+
+        res.collect { weeklyWeatherResult ->
+            weeklyWeatherResult.onSuccess { ww ->
+                var cambio = false
+                if(ww.isNotEmpty()){
+                    if (ww.first().longitude == _longitude.value.toDouble() || ww.first().latitude == _latitude.value.toDouble()) {
+                        if (ww.first().date != weekDaySpanish) {
+                            cambio = true
+                            println("ANDER")
+                        }
+                    } else {
+                        cambio = true
+                        println("MIKEl")
+                    }
+                    var data: MutableList<Pair<Triple<String, String, String>, Int>> = mutableListOf()
+                    for(i in ww){
+                        data.add(Pair(Triple(i.date, i.temperatureMax.toString(), i.temperatureMin.toString()), i.code))
+                    }
+                    _maxMin.value = data
+
+                }else{
+                    cambio = true
+                    println("NAIA")
+                }
+                if (cambio) {
+                    repo_ww.deleteAll()
+                    for (i in 1..7) {
+                        val currentDay = weatherBL.getSpecificWeekDayTemperature(weekW, i)
+                        val currentMaxMin = weatherBL.getMaxAndMinT(currentDay)
+                        val mostRepeatedCode = weatherBL.getAverageCode(currentDay)
+                        val weekDaySpanish = weekDayList.get((currentTime + i)-1)
+                        repo_ww.insert(weekDaySpanish, _latitude.value.toDouble(),
+                            _longitude.value.toDouble(),
+                            currentMaxMin.first.toDouble(),
+                            currentMaxMin.second.toDouble(), mostRepeatedCode.toLong())
+                    }
+                    var data: MutableList<Pair<Triple<String, String, String>, Int>> = mutableListOf()
+                    for(i in ww){
+                        data.add(Pair(Triple(i.date, i.temperatureMax.toString(), i.temperatureMin.toString()), i.code))
+                    }
+                    _maxMin.value = data
+                }
+
+            }.onFailure {
+
+            }
 
 
     }
-
+}
     fun setLatAndLong(latitude: Double, longitude: Double) {
         _latitude.value = latitude.toString()
         _longitude.value = longitude.toString()

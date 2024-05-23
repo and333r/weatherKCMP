@@ -19,14 +19,17 @@ class weeklyWeatherRepositorySQL(
             .collect{i -> emit(Result.success(i.map { j -> j.toWeeklyWeather() }))}
     }
 
-    override suspend fun insert(id: Long, date: String, latitude: Double, longitude: Double, temperatureMax: Double, temperatureMin: Double, code: Long) {
+    override suspend fun insert(date: String, latitude: Double, longitude: Double, temperatureMax: Double, temperatureMin: Double, code: Long) {
         dataSource.insert(
-            id = id,
             date = date,
             longitude = longitude,
             latitude = latitude,
             temperatureMax = temperatureMax,
             temperatureMin = temperatureMin,
             code = code)
+    }
+
+    override suspend fun deleteAll() {
+        dataSource.deleteAll()
     }
 }
