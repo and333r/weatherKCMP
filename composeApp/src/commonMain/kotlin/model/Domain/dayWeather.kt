@@ -1,5 +1,7 @@
 package model.Domain
 
+
+//TODO: Eliminar clase si no se usa
 data class dayWeather (
     val latitude: Double,
     val longitude: Double,

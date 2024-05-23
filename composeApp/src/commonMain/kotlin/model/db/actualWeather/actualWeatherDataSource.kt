@@ -13,16 +13,17 @@ class actualWeatherDataSource(db: WeatherAppDatabaseKCMP): ActualDataSource {
 
         private val queries = db.actualWeatherQueries
         //    Set id = null to let SQLDelight autogenerate the id
-        override suspend fun insert(id: Long, latitude: Double, longitude: Double, temperature: Double, humidity: Long, code: Long, relativeT: Double, precipitation: Long) {
+        override suspend fun insert(hour: Long, latitude: Double, longitude: Double, temperature: Double, humidity: Long, code: Long, relativeT: Double, precipitation: Long) {
             queries.insert(
-               // id = null,
-                //longitude = longitude,
-              //  latitude = latitude,
-              //  temperature = temperature,
-                //humidity = humidity,
-                //code = code,
-                //relativeT = relativeT,
-                //precipitation = precipitation
+                id = null,
+                hour = hour,
+                longitude = longitude,
+                latitude = latitude,
+                temperature = temperature,
+                humidity = humidity,
+                code = code,
+                relativeT = relativeT,
+                precipitation = precipitation
 
             )
         }
@@ -30,5 +31,9 @@ class actualWeatherDataSource(db: WeatherAppDatabaseKCMP): ActualDataSource {
         override suspend fun getAll(): Flow<List<ActualWeather>> {
             return queries.getAll().asFlow().mapToList(Dispatchers.IO)
         }
+
+    override suspend fun deleteAll() {
+        queries.deleteAll()
+    }
 
 }

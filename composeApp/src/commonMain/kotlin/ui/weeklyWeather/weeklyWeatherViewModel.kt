@@ -65,7 +65,6 @@ class WeeklyWeatherViewModel {
     suspend fun getAllData(latitude: Double, longitude: Double) {
 
         repo_hw.insert("Adios", 0.0, 0.0, 12.0)
-        repo_aw.insert(10, 0.0, 0.0, 0.0, 12, 1, 0.0, 12)
         val weekW = weatherBL.getAllData(latitude, longitude)
         val dayW = weatherBL.getDailyWeather(weekW)
         val currentHour = Clock.System.now()

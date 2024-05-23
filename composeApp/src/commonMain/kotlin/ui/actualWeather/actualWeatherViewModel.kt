@@ -2,8 +2,11 @@ package ui.actualWeather
 
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
+import app.cash.sqldelight.db.AfterVersion
+import com.db.WeatherAppDatabaseKCMP
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
@@ -55,27 +58,72 @@ class ActualWeatherViewModel : ViewModel(){
     private val _longitude = MutableStateFlow<String>("-5.9")
     val longitude : StateFlow<String> = _longitude
 
+    val db = createDatabase(DatabaseDriverFactory())
+    val ds_aw = actualWeatherDataSource(db)
+    val repo_aw = actualWeatherRepositorySQL(dataSource =  ds_aw)
+
     suspend fun getAllData(latitude: Double, longitude: Double) {
-        val weekW = weatherBL.getAllData(latitude, longitude)
-        val dayW = weatherBL.getDailyWeather(weekW)
         val currentHour = Clock.System.now()
         val currentTime = currentHour.toLocalDateTime(TimeZone.UTC).hour
-        val actualWeather = weatherBL.getActualTemperature(dayW, currentTime+1)
-        val dayseven = weatherBL.getSpecificWeekDayTemperature(weekW, 6)
-        var aux = actualWeather.temperature.roundToInt().toString()
-        _gradientColorList.value = weatherBL.returnGradient(actualWeather.code)
-        _actualT.value = aux + "º"
-        _actualC.value = actualWeather.code.toString()
-        aux = actualWeather.humidity.toString()
-        _actualH.value = "Humedad: $aux%"
-        aux = actualWeather.relativeT.roundToInt().toString()
-        _actualRT.value = "Sensación térmica: $aux" + "º"
-        aux = actualWeather.precipitation.toString()
-        _actualP.value = "Precipitaciones: $aux%"
-        _estado.value = weatherBL.returnEstado(_actualC.value!!.toInt())
+        val res = repo_aw.getAll()
+
+        res.collect{
+            val lastWeather = res.first()
+            lastWeather.onSuccess {
+                val values = it.firstOrNull()
+                var cambio = false
+                if(it.isNotEmpty()){
+                    if(latitude == values?.latitude || longitude==values?.longitude){
+                        val ultimaHora = values?.hour
+                        if(ultimaHora != (currentTime+2)){
+                            cambio = true
+                        }
+                    }else{
+                        cambio = true
+                    }
+                    if(cambio) {
+                        val weekW = weatherBL.getAllData(latitude, longitude)
+                        val dayW = weatherBL.getDailyWeather(weekW)
+                        val actualWeather = weatherBL.getActualTemperature(dayW, currentTime + 1)
+                        val dayseven = weatherBL.getSpecificWeekDayTemperature(weekW, 6)
+                        var aux = actualWeather.temperature.roundToInt().toString()
+                        repo_aw.deleteAll()
+                        repo_aw.insert(
+                            currentTime.toLong() + 2, latitude, longitude,
+                            actualWeather.temperature,
+                            actualWeather.humidity.toLong(),
+                            actualWeather.code.toLong(),
+                            actualWeather.relativeT,
+                            actualWeather.precipitation.toLong()
+                        )
+                    }
+                }
+                _gradientColorList.value = weatherBL.returnGradient(values!!.code)
+                _actualT.value = values.temperature.roundToInt().toString() + "º"
+                _actualC.value = values.code.toString()
+                var aux = values.humidity.toString()
+                _actualH.value = "Humedad: $aux%"
+                aux = values.relativeT.roundToInt().toString()
+                _actualRT.value = "Sensación térmica: $aux" + "º"
+                aux = values.precipitation.toString()
+                _actualP.value = "Precipitaciones: $aux%"
+                _estado.value = weatherBL.returnEstado(_actualC.value.toInt())
+
+            }.onFailure {
+                val weekW = weatherBL.getAllData(latitude, longitude)
+                val dayW = weatherBL.getDailyWeather(weekW)
+                val actualWeather = weatherBL.getActualTemperature(dayW, currentTime+1)
+                val dayseven = weatherBL.getSpecificWeekDayTemperature(weekW, 6)
+                var aux = actualWeather.temperature.roundToInt().toString()
+            }
+        }
     }
 
     fun setLatAndLong(latitude: Double, longitude: Double){
+        println("He pasado por setLatAndLong")
+        println(latitude)
+        println(longitude)
+
         _latitude.value = latitude.toString()
         _longitude.value = longitude.toString()
 

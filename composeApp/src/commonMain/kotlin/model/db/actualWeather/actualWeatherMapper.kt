@@ -5,6 +5,7 @@ import model.Domain.actualWeather
 
 fun ActualWeather.toActualWeather(): actualWeather{
     return actualWeather(
+        hour = hour.toInt(),
         latitude = latitude,
         longitude = longitude,
         temperature = temperature,

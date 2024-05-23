@@ -33,7 +33,9 @@ class weatherBL {
 
         fun getActualTemperature(dayWeather: dayWeather, hour: Int): actualWeather {
             println("Retrieving actual data...")
-            return actualWeather(dayWeather.latitude, dayWeather.longitude,
+            return actualWeather(
+                14,
+                dayWeather.latitude, dayWeather.longitude,
                 dayWeather.temperatures[hour],
                 dayWeather.humidities[hour],
                 dayWeather.codes[hour],

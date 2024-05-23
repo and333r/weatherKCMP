@@ -11,9 +11,9 @@ class actualWeatherRepositorySQL(
             .collect{i -> emit(Result.success(i.map { j -> j.toActualWeather() }))}
     }
 
-    override suspend fun insert(id: Long, latitude: Double, longitude: Double, temperature: Double, humidity: Long, code: Long, relativeT: Double, precipitation: Long) {
+    override suspend fun insert(hour: Long, latitude: Double, longitude: Double, temperature: Double, humidity: Long, code: Long, relativeT: Double, precipitation: Long) {
        dataSource.insert(
-           id = id,
+           hour = hour,
            longitude = longitude,
            latitude = latitude,
            temperature = temperature,
@@ -21,5 +21,9 @@ class actualWeatherRepositorySQL(
            code = code,
            relativeT = relativeT,
            precipitation = precipitation)
+    }
+
+    override suspend fun deleteAll() {
+        dataSource.deleteAll()
     }
 }

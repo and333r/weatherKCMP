@@ -5,5 +5,7 @@ import model.Domain.actualWeather
 
 interface actualWeatherRepository {
     fun getAll():  Flow<Result<List<actualWeather>>>
-    suspend fun insert(id: Long, latitude: Double, longitude: Double, temperature: Double, humidity: Long, code: Long, relativeT: Double, precipitation: Long)
+    suspend fun insert(hour: Long, latitude: Double, longitude: Double, temperature: Double, humidity: Long, code: Long, relativeT: Double, precipitation: Long)
+
+    suspend fun deleteAll()
 }
