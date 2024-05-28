@@ -67,7 +67,7 @@ class ActualWeatherViewModel : ViewModel(){
         val currentHour = Clock.System.now()
         val currentTime = currentHour.toLocalDateTime(TimeZone.UTC).hour
         val res = repo_aw.getAll()
-
+        println("Estoy en GetAllData en Actual")
         res.collect{
             val lastWeather = res.first()
             lastWeather.onSuccess {
