@@ -96,7 +96,7 @@ fun actualWeatherInfo(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(290.dp)
+            .height(300.dp)
             .background(
                 brush = GradientBackgroundBrush(
                     isVerticalGradient = false,
@@ -153,7 +153,7 @@ fun actualWeatherInfo(
                             modifier = Modifier.scale(1.5F),
                         )
                         Column(horizontalAlignment = Alignment.Start) {
-                            Spacer(modifier = Modifier.height(70.dp))
+                            Spacer(modifier = Modifier.height(65.dp))
                             Text(
                                 text = actualH,
                                 style = TextStyle(
@@ -182,16 +182,17 @@ fun actualWeatherInfo(
                     }
                 }
                 Spacer(modifier = Modifier.height(1.dp))
-                HorizontalDivider(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(2.dp),
-                    thickness = 2.dp,
-                    color = Color.Black
-                )
-            }
-        }
 
+            }
+
+        }
+        HorizontalDivider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(2.dp).align(Alignment.BottomStart),
+            thickness = 2.dp,
+            color = Color.Black
+        )
     }
 }
 

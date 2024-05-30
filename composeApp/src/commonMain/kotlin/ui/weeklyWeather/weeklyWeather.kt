@@ -131,7 +131,7 @@ fun weeklyWeather(weeklyWeatherViewModel: WeeklyWeatherViewModel) {
                             Image(
                                 painter = imagePainter,
                                 contentDescription = "Descripción de la imagen",
-                                modifier = Modifier.scale(1F),
+                                modifier = Modifier.scale(1.2F),
                             )
 
                         }
@@ -141,11 +141,11 @@ fun weeklyWeather(weeklyWeatherViewModel: WeeklyWeatherViewModel) {
                                 .padding(8.dp)
                         ) {
                             Text(
-                                text = "max: " + maxMin[it].first.second + "º",
+                                text = "max: " + maxMin[it].first.second.toDouble().roundToInt() + "º",
                                 style = TextStyle(
                                     fontFamily = FontFamily.SansSerif,
                                     fontWeight = FontWeight.Normal,
-                                    fontSize = getTextSizeMedium().sp
+                                    fontSize = 18.sp
                                 )
                             )
 
@@ -156,11 +156,11 @@ fun weeklyWeather(weeklyWeatherViewModel: WeeklyWeatherViewModel) {
                                 .padding(8.dp)
                         ) {
                             Text(
-                                text = "min: " + maxMin[it].first.third + "º",
+                                text = "min: " + maxMin[it].first.third.toDouble().roundToInt() + "º",
                                 style = TextStyle(
                                     fontFamily = FontFamily.SansSerif,
                                     fontWeight = FontWeight.Normal,
-                                    fontSize = getTextSizeMedium().sp
+                                    fontSize = 18.sp
                                 )
                             )
                         }
